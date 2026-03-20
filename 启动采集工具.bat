@@ -17,7 +17,7 @@ if %errorlevel% neq 0 (
 )
 
 echo [INFO] Installing dependencies...
-pip install flask requests loguru python-dotenv retry openpyxl PyExecJS -q
+pip install flask requests loguru python-dotenv retry openpyxl PyExecJS
 if %errorlevel% neq 0 (
     echo [ERROR] Failed to install dependencies. Check your network.
     pause
