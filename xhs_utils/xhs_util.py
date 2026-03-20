@@ -3,16 +3,10 @@ import math
 import random
 import execjs
 from xhs_utils.cookie_util import trans_cookies
+from xhs_utils.path_util import resource_path
 
-try:
-    js = execjs.compile(open(r'../static/xhs_xs_xsc_56.js', 'r', encoding='utf-8').read())
-except:
-    js = execjs.compile(open(r'static/xhs_xs_xsc_56.js', 'r', encoding='utf-8').read())
-
-try:
-    xray_js = execjs.compile(open(r'../static/xhs_xray.js', 'r', encoding='utf-8').read())
-except:
-    xray_js = execjs.compile(open(r'static/xhs_xray.js', 'r', encoding='utf-8').read())
+js = execjs.compile(open(resource_path('static/xhs_xs_xsc_56.js'), 'r', encoding='utf-8').read())
+xray_js = execjs.compile(open(resource_path('static/xhs_xray.js'), 'r', encoding='utf-8').read())
 
 def generate_x_b3_traceid(len=16):
     x_b3_traceid = ""

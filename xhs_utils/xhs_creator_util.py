@@ -1,11 +1,9 @@
 import json
 
 import execjs
+from xhs_utils.path_util import resource_path
 
-try:
-    js = execjs.compile(open(r'../static/xhs_creator_xs.js', 'r', encoding='utf-8').read())
-except:
-    js = execjs.compile(open(r'static/xhs_creator_xs.js', 'r', encoding='utf-8').read())
+js = execjs.compile(open(resource_path('static/xhs_creator_xs.js'), 'r', encoding='utf-8').read())
 
 
 def generate_xs(a1, api, data=''):

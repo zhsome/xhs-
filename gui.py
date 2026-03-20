@@ -14,6 +14,7 @@ from loguru import logger
 
 from main import Data_Spider
 from xhs_utils.common_util import init
+from xhs_utils.path_util import resource_path
 
 
 class LogHandler:
@@ -61,8 +62,11 @@ class XHSApp:
         logger.info("小红书数据采集工具已启动，请先配置 Cookies")
 
     def _init_paths(self):
-        """初始化保存路径"""
-        base = os.path.abspath(os.path.join(os.path.dirname(__file__), "datas"))
+        """初始化保存路径，exe 模式下保存到 exe 同级目录"""
+        if hasattr(sys, '_MEIPASS'):
+            base = os.path.join(os.path.dirname(sys.executable), "datas")
+        else:
+            base = os.path.abspath(os.path.join(os.path.dirname(__file__), "datas"))
         self.media_path = os.path.join(base, "media_datas")
         self.excel_path = os.path.join(base, "excel_datas")
         for p in [self.media_path, self.excel_path]:
@@ -140,7 +144,7 @@ class XHSApp:
 
     def _save_cookies(self):
         cookies = self.cookies_text.get("1.0", tk.END).strip()
-        env_path = os.path.join(os.path.dirname(__file__), ".env")
+        env_path = resource_path(".env")
         with open(env_path, "w", encoding="utf-8") as f:
             f.write(f"COOKIES='{cookies}'\n")
         logger.info("Cookies 已保存到 .env 文件")
@@ -352,7 +356,10 @@ class XHSApp:
         self.log_text.configure(state="disabled")
 
     def _open_data_dir(self):
-        data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "datas"))
+        if hasattr(sys, '_MEIPASS'):
+            data_dir = os.path.join(os.path.dirname(sys.executable), "datas")
+        else:
+            data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "datas"))
         os.makedirs(data_dir, exist_ok=True)
         if sys.platform == "win32":
             os.startfile(data_dir)

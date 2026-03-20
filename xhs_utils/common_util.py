@@ -1,9 +1,10 @@
 import os
 from loguru import logger
 from dotenv import load_dotenv
+from xhs_utils.path_util import resource_path
 
 def load_env():
-    load_dotenv()
+    load_dotenv(resource_path('.env'))
     cookies_str = os.getenv('COOKIES')
     return cookies_str
 
